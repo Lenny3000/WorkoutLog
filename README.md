@@ -5,4 +5,4 @@
 ![](images/allWorkoutLogsByUser.png)
 ![](images/individualLogByUser.png)
 ![](images/updateWorkoutLog.png)
-![](images/deleteWorkotLog.png)
+![](images/deleteWorkoutLog.png)
