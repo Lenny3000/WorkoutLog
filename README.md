@@ -1,2 +1,2 @@
 # WorkoutLog
-![]images/newUserRegister.png
+![]/images/newUserRegister.png
