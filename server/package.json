@@ -21,6 +21,7 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "merge-descriptors": "^1.0.1",
+    "nodemon": "^2.0.15",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.14.0"

@@ -14,63 +14,96 @@ router.get('/practice', validateJWT, (req, res) => {
    Workout Log Create
 =====================
 */
-router.post('/create', validateJWT, async (req, res) => {
-    const { description, definition, result } = req.body.workoutlog;
-    const {id } = req.user; 
-    const workoutLogResult = {
+// router.post('/create', validateJWT, async (req, res) => {
+//     const { description, definition, result } = req.body.workoutlog;
+//     const {id } = req.user; 
+//     const workoutLogResult = {
+//         description,
+//         definition,
+//         result,
+//         owner_id: id
+//     }
+//     try {
+//         const newWorkoutLog = await WorkoutLogModel.create (workoutLogResult); 
+//         res.status(200).json (newWorkoutLog);
+//     } catch (err) {
+//         res.status(500).json({ error: err });
+//     }
+    
+// });
+    
+router.post("/", validateJWT, async (req, res) => {
+    const { description, definition, result } = req.body.workoutlog
+    // const {id } = req.user
+    const logEntry = {
         description,
         definition,
         result,
-        owner_id: id
+        owner_id: req.user.id
     }
     try {
-        const newWorkoutLog = await WorkoutLogModel.create (workoutLogResult); 
-        res.status(200).json (newWorkoutLog);
+        const newLog = await WorkoutLogModel.create(logEntry)
+        res.status(200).json(newLog)
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: err })
     }
-    
-});
-    
+})
+
+
 /* 
 ===========================
     Get all Workout Logs
 ===========================
 */
-router.get("/", async (req, res) => {
-    try {
-        const entries = await WorkoutLogModel.findAll();
-        res.status(200).json(entries);
-    } catch (err) {
-        res.status(500).json({ error: err });
-    }
-});
+// router.get("/", async (req, res) => {
+//     try {
+//         const entries = await WorkoutLogModel.findAll();
+//         res.status(200).json(entries);
+//     } catch (err) {
+//         res.status(500).json({ error: err });
+//     }
+// });
  
 /* 
 ===============================
     Get Workout Logs by User
 ===============================
 */
-router.get("/mine", validateJWT, async (rec, res) => {
-    let { id } = req.user;
+// router.get("/", validateJWT, async (req, res) => {
+//     let { id } = req.user
+//     try {
+//         const userWorkoutLogs = await WorkoutLogModel.findall({
+//             where: {
+//                 owner_id: req.user.id
+//             }
+//         });
+//         res.status(200).json(userWorkoutLogs);
+//     } catch (err) {
+//         res.status(500).json({ error: err });
+//     }
+// });
+
+router.get("/:id", validateJWT, async (req, res) => {
+    const { id } = req.params
     try {
-        const userWorkoutLogs = await WorkoutLogModel.findall({
+        const myLogs = await WorkoutLogModel.findAll({
             where: {
-                owner_id: id
+                id: id
             }
-        });
-        res.status(200).json(userWorkoutLogs);
+        })
+        res.status(200).json(myLogs)
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: err })
     }
-});
+})
+
 
 /* 
 =====================================
     Get Workout Logs by description
 =====================================
 */
-router.get("/:description", async (req, res) => {
+router.get("/description", async (req, res) => {
     const { description } = req.params;
     try {
         const results = await WorkoutLogModel.findAll({
@@ -87,15 +120,15 @@ router.get("/:description", async (req, res) => {
     Update a Workout Log
 ==============================
 */
-router.put("/update/:resultId", validateJWT, async (req, res) => {
+router.put("/:id", validateJWT, async (req, res) => {
     const { description, definition, result } = req.body.workoutLog;
-    const workoutLogId = req.params.result;
+    const workoutLogId = req.params.id;
     const userId = req.user.id;
 
     const query = {
         where: {
             id: workoutLogId,
-            owner_id: userId
+            owner_id: userId,
         }
 };
 
@@ -118,14 +151,14 @@ try {
     Delete a Workout Log
 ================================
 */
-router.delete("/delete/:id", validateJWT, async (req, res) => {
+router.delete("/:id", validateJWT, async (req, res) => {
     const ownerId = req.user.id;
     const workoutLogId = req.params.id;
 
     try {
         const query = {
             where: {
-                id: workoutLog,
+                id: workoutLogId,
                 owner_id: ownerId
             }
         };

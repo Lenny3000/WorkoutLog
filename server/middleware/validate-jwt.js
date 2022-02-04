@@ -15,7 +15,7 @@ const validateJWT = async (req, res, next) => {
                 authorization.includes ("Bearer")
                     ? authorization.split(" ")[1]
                     : authorization,
-                process.env. JWT_SECRET
+                process.env.JWT_SECRET
                 )
             : undefined;
 
@@ -26,7 +26,7 @@ const validateJWT = async (req, res, next) => {
             //console.log("foundUser -->", foundUser);
 
             if (foundUser) { 
-            //    console.log("request -->", req);
+           //     console.log("request -->", req);
                 req.user = foundUser;
                 next ();
             } else {

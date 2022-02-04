@@ -10,7 +10,7 @@ const controllers = require("./controllers");
 app.use("/user", controllers.userController);
 
 // app.use(require("./middleware/validate-jwt"));
-app.use("/workoutlog", controllers.workoutLogController);
+app.use("/log", controllers.workoutLogController);
 
 
 dbConnection.authenticate()
