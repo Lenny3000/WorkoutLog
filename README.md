@@ -1,2 +1,2 @@
 # WorkoutLog
-![]/images/newUserRegister.png
+![]https://github.com/Lenny3000/WorkoutLog/blob/main/images/newUserRegister.png
